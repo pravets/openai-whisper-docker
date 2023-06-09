@@ -88,10 +88,11 @@ You can also work from a bash prompt by starting the container like so (`-it` gi
 docker run -it --rm --mount type=bind,src=$(pwd),target=/files --workdir /files --entrypoint bash whisper
 ```
 
-Then you can run whisper from the bash command line, e.g.:
+Then you can run whisper from the bash command line, as well as other Linux commands, e.g., here we'll transcribe a video and then add the subtitle text to the video:
 
 ```bash
-whisper test.wav --model tiny.en 
+whisper test.mp4 --model tiny.en
+ffmpeg -i test.mp4 -hide_banner -loglevel error -i "test.srt" -c copy -c:s mov_text -y test_subtitled.mp4
 ```
 
 When you're done, type `exit` to quit bash and close the container.
